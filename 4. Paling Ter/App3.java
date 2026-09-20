@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class App {
+public class App3 {
     public static void main(String[] args) {
         ArrayList<Integer> data = bacaData();
         if (data.isEmpty()) return;

@@ -1,44 +1,56 @@
 import java.util.Scanner;
 
 public class App {
-  public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        if (!scanner.hasNextLine()) return;
+        
+        String nim = scanner.nextLine().trim();
+        scanner.close(); 
 
-    if (!scanner.hasNextLine()) return;
-    String nim = scanner.nextLine().trim();
-    scanner.close(); 
-
-    if (nim.length() != 8) {
+        if (nim.length() != 8) {
             System.out.println("NIM harus 8 karakter");
             return;
+        }
+
+        prosesDataNIM(nim);
     }
 
-    String prefix = nim.substring(0, 3);
-    String prodi = "";
+    private static void prosesDataNIM(String nim) {
+        String prefix = nim.substring(0, 3);
+        String prodi = parseProdi(prefix);
 
-    switch (prefix) {
-      case "11S": prodi = "Sarjana Informatika"; break;
-      case "12S": prodi = "Sarjana Sistem Informasi"; break;
-      case "13S": prodi = "Sarjana Teknik Elektro"; break;
-      case "21S": prodi = "Sarjana Manajemen Rekayasa"; break;
-      case "22S": prodi = "Sarjana Teknik Metalurgi"; break;
-      case "31S": prodi = "Sarjana Teknik Bioproses"; break;
-      case "32S": prodi = "Sarjana Bioteknologi"; break;
-      case "114": prodi = "Diploma 4 Teknologi Rekasaya Perangkat Lunak"; break;
-      case "113": prodi = "Diploma 3 Teknologi Informasi"; break;
-      case "133": prodi = "Diploma 3 Teknologi Komputer"; break;
-      default:
-        System.out.println("Kode tidak tersedia");
-        return;
+        if (prodi == null) {
+            System.out.println("Kode tidak tersedia");
+            return;
+        }
+
+        int angkatan = Integer.parseInt("20" + nim.substring(3, 5));
+        int urutan = Integer.parseInt(nim.substring(5, 8));
+
+        cetakInformasi(nim, prodi, angkatan, urutan);
     }
 
-    int angkatan = Integer.parseInt("20" + nim.substring(3, 5));
-    int urutan = Integer.parseInt(nim.substring(5, 8));
+    private static String parseProdi(String prefix) {
+        switch (prefix) {
+            case "11S": return "Sarjana Informatika";
+            case "12S": return "Sarjana Sistem Informasi";
+            case "13S": return "Sarjana Teknik Elektro";
+            case "21S": return "Sarjana Manajemen Rekayasa";
+            case "22S": return "Sarjana Teknik Metalurgi";
+            case "31S": return "Sarjana Teknik Bioproses";
+            case "32S": return "Sarjana Bioteknologi";
+            case "114": return "Diploma 4 Teknologi Rekayasa Perangkat Lunak"; // Typo diperbaiki
+            case "113": return "Diploma 3 Teknologi Informasi";
+            case "133": return "Diploma 3 Teknologi Komputer";
+            default: return null;
+        }
+    }
 
-    System.out.println("Informasi NIM " + nim + ": ");
-    System.out.println(">> Program Studi: " + prodi);
-    System.out.println(">> Angkatan: " + angkatan);
-    System.out.println(">> Urutan: " + urutan);  
-  }
-
+    private static void cetakInformasi(String nim, String prodi, int angkatan, int urutan) {
+        System.out.println("Informasi NIM " + nim + ": "); // Typo diperbaiki
+        System.out.println(">> Program Studi: " + prodi);
+        System.out.println(">> Angkatan: " + angkatan);
+        System.out.println(">> Urutan: " + urutan);  
+    }
 }

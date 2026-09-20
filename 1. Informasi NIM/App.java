@@ -35,7 +35,7 @@ public class App {
     int angkatan = Integer.parseInt("20" + nim.substring(3, 5));
     int urutan = Integer.parseInt(nim.substring(5, 8));
 
-    System.out.println("Inforamsi NIM " + nim + ": ");
+    System.out.println("Informasi NIM " + nim + ": ");
     System.out.println(">> Program Studi: " + prodi);
     System.out.println(">> Angkatan: " + angkatan);
     System.out.println(">> Urutan: " + urutan);  

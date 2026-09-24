@@ -2,11 +2,15 @@ import java.util.Scanner;
 import java.util.Locale;
 
 public class App {
+    private static final int JUMLAH_KOMPONEN = 6;
+    private static final int TOTAL_BOBOT = 100;
+    private static final double SKALA_NILAI = 100.0;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] bobot = new int[6];
-        int[] perolehan = new int[6];
+        int[] bobot = new int[JUMLAH_KOMPONEN];
+        int[] perolehan = new int[JUMLAH_KOMPONEN];
 
         bacaPerolehanNilai(sc, bobot, perolehan);
         sc.close();
@@ -16,7 +20,7 @@ public class App {
             sumBobot += b;
         }
 
-        if (sumBobot != 100) {
+        if (sumBobot != TOTAL_BOBOT) {
             System.out.println("Total bobot harus 100");
             return;
         }
@@ -40,7 +44,7 @@ public class App {
                 String symbol = parts[0].trim();
                 int b = Integer.parseInt(parts[1].trim());
                 int p = Integer.parseInt(parts[2].trim());
-                
+
                 int idx = getSymbolIndex(symbol);
                 if (idx == -1) {
                     System.out.println("Simbol tidak dikenal");
@@ -63,13 +67,13 @@ public class App {
         String[] names = {"Partisipatif", "Tugas", "Kuis", "Proyek", "UTS", "UAS"};
         double nilaiAkhir = 0;
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < JUMLAH_KOMPONEN; i++) {
             double perolehan100 = 0;
             if (bobot[i] > 0) {
-                perolehan100 = ((double) perolehan[i] * 100) / bobot[i]; 
+                perolehan100 = ((double) perolehan[i] * SKALA_NILAI) / bobot[i];
             }
-            
-            double kontribusi = (perolehan100 / 100.0) * bobot[i];
+
+            double kontribusi = (perolehan100 / SKALA_NILAI) * bobot[i];
             nilaiAkhir += kontribusi;
 
             System.out.printf(Locale.US, ">> %s: %.0f/100 (%.2f/%d)\n", names[i], perolehan100, kontribusi, bobot[i]);
@@ -77,8 +81,8 @@ public class App {
 
         System.out.println();
         System.out.printf(Locale.US, ">> Nilai Akhir: %.2f\n", nilaiAkhir);
-        
-        nilaiAkhir = Math.round(nilaiAkhir * 100.0) / 100.0;
+
+        nilaiAkhir = Math.round(nilaiAkhir * SKALA_NILAI) / SKALA_NILAI;
         System.out.println(">> Grade: " + konversiGrade(nilaiAkhir));
     }
 

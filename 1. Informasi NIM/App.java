@@ -26,10 +26,13 @@ public class App {
             return;
         }
 
-        int angkatan = Integer.parseInt("20" + nim.substring(3, 5));
-        int urutan = Integer.parseInt(nim.substring(5, 8));
-
-        cetakInformasi(nim, prodi, angkatan, urutan);
+        try {
+            int angkatan = Integer.parseInt("20" + nim.substring(3, 5));
+            int urutan = Integer.parseInt(nim.substring(5, 8));
+            cetakInformasi(nim, prodi, angkatan, urutan);
+        } catch (NumberFormatException e) {
+            System.out.println("NIM tidak valid");
+        }
     }
 
     private static String parseProdi(String prefix) {
@@ -49,7 +52,7 @@ public class App {
             case "32S":
                 return "Sarjana Bioteknologi";
             case "114":
-                return "Diploma 4 Teknologi Rekayasa Perangkat Lunak"; // Typo diperbaiki
+                return "Diploma 4 Teknologi Rekayasa Perangkat Lunak";
             case "113":
                 return "Diploma 3 Teknologi Informasi";
             case "133":
@@ -60,7 +63,7 @@ public class App {
     }
 
     private static void cetakInformasi(String nim, String prodi, int angkatan, int urutan) {
-        System.out.println("Informasi NIM " + nim + ": "); // Typo diperbaiki
+        System.out.println("Informasi NIM " + nim + ": ");
         System.out.println(">> Program Studi: " + prodi);
         System.out.println(">> Angkatan: " + angkatan);
         System.out.println(">> Urutan: " + urutan);

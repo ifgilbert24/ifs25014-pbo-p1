@@ -1,25 +1,39 @@
 import java.util.Scanner;
 
-public class App2 {
+public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!sc.hasNextInt()) {
+            System.out.println("Input tidak valid");
             sc.close();
             return;
         }
 
         int n = sc.nextInt();
+        if (n <= 0) {
+            System.out.println("Ukuran matriks harus lebih besar dari 0");
+            sc.close();
+            return;
+        }
+        
         int[][] matrix = bacaMatriks(sc, n);
         sc.close();
 
-        prosesMatriks(matrix, n);
+        if (matrix != null) {
+            prosesMatriks(matrix, n);
+        }
     }
 
     private static int[][] bacaMatriks(Scanner sc, int n) {
         int[][] matrix = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                matrix[i][j] = sc.nextInt();
+                if (sc.hasNextInt()) {
+                    matrix[i][j] = sc.nextInt();
+                } else {
+                    System.out.println("Data matriks tidak lengkap atau tidak valid");
+                    return null;
+                }
             }
         }
         return matrix;

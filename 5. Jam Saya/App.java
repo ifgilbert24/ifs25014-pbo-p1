@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class App4 {
+public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!sc.hasNextLine()) {
@@ -36,9 +36,7 @@ public class App4 {
     }
 
     private static void prosesPergeseranJam(Scanner sc, int startH, int startM) {
-        int currentMinutes = (startH * 60) + startM;
         long totalShift = 0;
-        int pergantianHari = 0;
         
         while (sc.hasNextLine()) {
             String line = sc.nextLine().trim();
@@ -53,24 +51,19 @@ public class App4 {
             try {
                 int shift = Integer.parseInt(line);
                 totalShift += shift;
-                currentMinutes += shift;
-                
-                // Normalisasi & Tracking Hari
-                while (currentMinutes >= 1440) {
-                    currentMinutes -= 1440;
-                    pergantianHari++;
-                }
-                while (currentMinutes < 0) {
-                    currentMinutes += 1440;
-                    pergantianHari++;
-                }
             } catch (NumberFormatException e) {
                 System.out.println("Perintah tidak valid");
             }
         }
         sc.close();
         
-        cetakHasil(startH, startM, currentMinutes, totalShift, pergantianHari);
+        long startMinutes = (startH * 60L) + startM;
+        long finalMinutes = startMinutes + totalShift;
+        
+        long pergantianHari = Math.floorDiv(finalMinutes, 1440);
+        long currentMinutes = Math.floorMod(finalMinutes, 1440);
+        
+        cetakHasil(startH, startM, (int)currentMinutes, totalShift, (int)pergantianHari);
     }
 
     private static void cetakHasil(int startH, int startM, int endMinutes, long totalShift, int pergantianHari) {
@@ -82,6 +75,6 @@ public class App4 {
         
         String sign = (totalShift > 0) ? "+" : "";
         System.out.println("Total Menit: " + sign + totalShift);
-        System.out.println("Pergantian Hari: " + pergantianHari);
+        System.out.println("Pergantian Hari: " + Math.abs(pergantianHari));
     }
 }

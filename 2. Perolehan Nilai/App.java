@@ -1,44 +1,30 @@
 import java.util.Scanner;
 import java.util.Locale;
 
-public class App1 {
+public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        if (!sc.hasNextInt()) {
-            sc.close();
-            return;
-        }
 
-        int[] bobot = bacaBobot(sc);
-        if (bobot == null) return; 
-
-        int[] total = new int[6];
+        int[] bobot = new int[6];
         int[] perolehan = new int[6];
 
-        bacaPerolehanNilai(sc, total, perolehan, bobot);
+        bacaPerolehanNilai(sc, bobot, perolehan);
         sc.close();
 
-        hitungDanCetakNilaiAkhir(bobot, total, perolehan);
-    }
-
-    private static int[] bacaBobot(Scanner sc) {
-        int[] bobot = new int[6];
         int sumBobot = 0;
-        for (int i = 0; i < 6; i++) {
-            bobot[i] = sc.nextInt();
-            sumBobot += bobot[i];
+        for (int b : bobot) {
+            sumBobot += b;
         }
-        sc.nextLine(); 
 
         if (sumBobot != 100) {
             System.out.println("Total bobot harus 100");
-            sc.close();
-            return null;
+            return;
         }
-        return bobot;
+
+        hitungDanCetakNilaiAkhir(bobot, perolehan);
     }
 
-    private static void bacaPerolehanNilai(Scanner sc, int[] total, int[] perolehan, int[] bobot) {
+    private static void bacaPerolehanNilai(Scanner sc, int[] bobot, int[] perolehan) {
         while (sc.hasNextLine()) {
             String line = sc.nextLine().trim();
             if (line.equals("---")) break;
@@ -64,7 +50,7 @@ public class App1 {
                 if (p > b) p = b;
                 if (p < 0) p = 0;
 
-                total[idx] += b;
+                bobot[idx] += b;
                 perolehan[idx] += p;
             } catch (NumberFormatException e) {
                 System.out.println("Data tidak valid. Silahkan menggunakan format: Simbol|Bobot|Perolehan-Nilai");
@@ -72,16 +58,15 @@ public class App1 {
         }
     }
 
-    private static void hitungDanCetakNilaiAkhir(int[] bobot, int[] total, int[] perolehan) {
+    private static void hitungDanCetakNilaiAkhir(int[] bobot, int[] perolehan) {
         System.out.println("Perolehan Nilai:");
         String[] names = {"Partisipatif", "Tugas", "Kuis", "Proyek", "UTS", "UAS"};
         double nilaiAkhir = 0;
 
         for (int i = 0; i < 6; i++) {
             double perolehan100 = 0;
-            if (total[i] > 0) {
-                // Perbaikan potensi integer division
-                perolehan100 = ((double) perolehan[i] * 100) / total[i]; 
+            if (bobot[i] > 0) {
+                perolehan100 = ((double) perolehan[i] * 100) / bobot[i]; 
             }
             
             double kontribusi = (perolehan100 / 100.0) * bobot[i];

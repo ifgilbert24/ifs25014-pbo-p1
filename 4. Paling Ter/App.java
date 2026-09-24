@@ -2,10 +2,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class App3 {
+public class App {
     public static void main(String[] args) {
         ArrayList<Integer> data = bacaData();
-        if (data.isEmpty()) return;
+        if (data.isEmpty()) {
+            System.out.println("Data kosong");
+            return;
+        }
         
         Collections.sort(data);
         hitungStatistik(data);
@@ -23,7 +26,7 @@ public class App3 {
             try {
                 data.add(Integer.parseInt(line));
             } catch (NumberFormatException e) {
-                // Ignore invalid lines
+                System.out.println("Input tidak valid diabaikan: " + line);
             }
         }
         sc.close();
